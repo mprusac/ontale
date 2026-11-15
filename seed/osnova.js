@@ -1,0 +1,202 @@
+// Početni podaci: kategorije, karte, rute, prijevozna sredstva i postavke.
+// Sve se nakon seeda uređuje u admin panelu — ništa od ovoga nije upisano u kod aplikacije.
+
+export const KATEGORIJE = [
+  { slug: 'nogomet', name: 'Nogomet', emoji: '⚽', sort_order: 1 },
+  { slug: 'kosarka', name: 'Košarka', emoji: '🏀', sort_order: 2 },
+  { slug: 'rukomet', name: 'Rukomet', emoji: '🤾', sort_order: 3 },
+  { slug: 'tenis', name: 'Tenis', emoji: '🎾', sort_order: 4 },
+  { slug: 'formula-1', name: 'Formula 1', emoji: '🏎️', sort_order: 5 },
+  { slug: 'borilacki', name: 'Borilački sportovi', emoji: '🥊', sort_order: 6 },
+  { slug: 'procjene', name: 'Procjene', emoji: '🎯', sort_order: 7 },
+];
+
+// Rute su namjerno ŠIROKE: kilometri u ONTALE-u su udaljenost unutar igre (virtualni kilometri), a ne najkraća cesta.
+// Glavni dio (polazište → cilj) uvijek vrijedi `total_km`; nastavak iza cilja u susjednu državu vrijedi `ext_km`.
+// Točka: [naziv, nadimak, lat, lng, postaja (1) ili samo oblikuje putanju (0), poruka pri prolasku, dodatno]
+// dodatno: { cilj: true } = glavno odredište, { d: 'me' } = država točke (ako nije država karte), { granica: true } = granični prijelaz
+export const DRZAVE = {
+  hr: { name: 'Hrvatska', flag: '🇭🇷' },
+  ba: { name: 'Bosna i Hercegovina', flag: '🇧🇦' },
+  me: { name: 'Crna Gora', flag: '🇲🇪' },
+};
+
+export const KARTE = [
+  {
+    slug: 'hr', name: 'Hrvatska', flag: '🇭🇷', total_km: 1000, ext_km: 1250, real_km: 1390, route: 'Vukovar – Dubrovnik',
+    points: [
+      ['Vukovar', 'Start na Dunavu', 45.3452, 19.0010, 1, 'Vukovar. Dunav ti je iza leđa, Jadran je daleko ispred.'],
+      ['Osijek', 'Grad na Dravi', 45.5550, 18.6955, 1, 'Osijek. Opus Arena je iza ugla, ali nema stajanja.'],
+      ['Đakovo', 'Grad konja i katedrale', 45.3083, 18.4100, 1, 'Đakovo. Lipicaneri i katedrala — ni jedno te ne usporava.'],
+      ['Nova Gradiška', 'Pod Psunjom', 45.2583, 17.3833, 1, 'Nova Gradiška. Pod Psunjom, uz Savu, kroz Slavoniju.'],
+      ['Našice', 'Rukometni gradić', 45.4886, 18.0878, 1, 'Našice. Mali grad koji u rukometu igra s velikima.'],
+      ['Virovitica', 'Podravska ravnica', 45.8316, 17.3838, 1, 'Virovitica. Podravina se vuče, ali kilometri se zbrajaju.'],
+      ['Koprivnica', 'Podravkine dame', 46.1628, 16.8275, 1, 'Koprivnica. Ovdje su rukometašice osvajale Europu.'],
+      ['Varaždin', 'Barokni sjever', 46.3057, 16.3366, 1, 'Varaždin. Barok, Varteks i najsjevernija točka puta.'],
+      ['Gornje Jesenje', 'Zagorski zavoji', 46.1720, 15.9600, 1, 'Gornje Jesenje. Zagorski brežuljci i serpentine.'],
+      ['Zagreb', 'Maksimirska šuma', 45.8150, 15.9819, 1, 'Zagreb. Maksimir, Cibona i gužva na Slavonskoj.'],
+      ['Karlovac', 'Četiri rijeke i jedno pivo', 45.4929, 15.5553, 1, 'Karlovac. Četiri rijeke, a ti nemaš vremena ni za jednu.'],
+      ['Ogulin', 'Klek i Đulin ponor', 45.2667, 15.2300, 1, 'Ogulin. Klek čuva put, Đulin ponor te prati.'],
+      ['Delnice', null, 45.4010, 14.7990, 0, null],
+      ['Rijeka', 'Kantrida pod stijenom', 45.3271, 14.4422, 1, 'Rijeka. Kantrida je stisnuta između stijene i mora.'],
+      ['Opatija', 'Riviera i Angiolina', 45.3400, 14.3060, 1, 'Opatija. Lungomare, Angiolina i Jadran pred očima.'],
+      ['Pazin', null, 45.2400, 13.9360, 0, null],
+      ['Pula', 'Arena prije svih arena', 44.8666, 13.8496, 1, 'Pula. Ova Arena prima publiku već dvije tisuće godina.'],
+      ['Labin', null, 45.0950, 14.1190, 0, null],
+      ['Cres', 'Trajektom preko Kvarnera', 44.9606, 14.4083, 1, 'Cres. Trajekt je mali, ali kilometri vrijede isto.'],
+      ['Krk', 'Zlatni otok', 45.0261, 14.5750, 1, 'Krk. Preko mosta natrag na kopno.'],
+      ['Crikvenica', null, 45.1770, 14.6930, 0, null],
+      ['Senj', 'Kapija bure', 44.9894, 14.9058, 1, 'Senj. Ako bura dopusti, nastavljaš.'],
+      ['Gospić', 'Lička zavjetrina', 44.5461, 15.3747, 1, 'Gospić. Lika — ovdje i ljeti treba jakna.'],
+      ['Sveti Rok', null, 44.3550, 15.6800, 0, null],
+      ['Obrovac', 'Zrmanja i Velebit', 44.1972, 15.6819, 1, 'Obrovac. Zrmanja urezuje dolinu, Velebit urezuje pogled.'],
+      ['Zadar', 'Kolijevka košarke', 44.1194, 15.2314, 1, 'Zadar. Kažu da je Bog stvorio čovjeka, a Zadar košarku.'],
+      ['Biograd na Moru', 'Stara prijestolnica', 43.9411, 15.4472, 1, 'Biograd na Moru. Jednom glavni grad, danas marina.'],
+      ['Šibenik', 'Draženov grad', 43.7350, 15.8952, 1, 'Šibenik. Ovdje je Dražen ostajao na treningu kad su svi otišli.'],
+      ['Trogir', 'Kamena pozornica', 43.5167, 16.2528, 1, 'Trogir. Kamena jezgra, a ti letiš uz obalu.'],
+      ['Split', 'Najsportskiji grad na svitu', 43.5081, 16.4402, 1, 'Split. Toliko olimpijaca da se ne stignu ni pobrojati.'],
+      ['Omiš', 'Cetina u klancu', 43.4442, 16.6919, 1, 'Omiš. Gusarski grad u klancu Cetine.'],
+      ['Makarska', 'Magistrala uz more', 43.2969, 17.0177, 1, 'Makarska. Biokovo s jedne strane, more s druge.'],
+      ['Ploče', 'Ušće Neretve', 43.0565, 17.4326, 1, 'Ploče. Neretva, mandarine i zadnja dionica.'],
+      ['Metković', 'Neretva i Hutovo blato', 43.0531, 17.6494, 1, 'Metković. Neretva vijuga, more blizu.'],
+      ['Pelješki most', null, 42.9300, 17.5350, 0, null],
+      ['Ston', null, 42.8380, 17.6970, 0, null],
+      ['Dubrovnik', 'Cilj na Stradunu', 42.6507, 18.0944, 1, 'Dubrovnik! Stradun je tvoj — ali put ide dalje.', { cilj: true }],
+      ['Cavtat', null, 42.5810, 18.2180, 0, null],
+      ['Debeli Brijeg', 'Granični prijelaz', 42.4690, 18.4560, 1, 'Granica. Hrvatska ostaje iza tebe — dobro došao u Crnu Goru.', { d: 'me', granica: true }],
+      ['Herceg Novi', 'Ulaz u Boku', 42.4531, 18.5375, 1, 'Herceg Novi. Vaterpolo se ovdje igra otkad je mora.', { d: 'me' }],
+      ['Kotor', 'Dno zaljeva', 42.4247, 18.7712, 1, 'Kotor. Primorac je ovdje vaterpolska institucija.', { d: 'me' }],
+      ['Budva', 'Rivijera', 42.2864, 18.8400, 1, 'Budva. Plaže su pune, a ti samo prolaziš.', { d: 'me' }],
+      ['Bar', 'Luka na jugu', 42.0931, 19.1003, 1, 'Bar. Mornar ovdje čuva košarkašku luku.', { d: 'me' }],
+      ['Ulcinj', 'Krajnji jug', 41.9294, 19.2244, 1, 'Ulcinj. Južnije od ovoga ruta ne ide.', { d: 'me' }],
+      ['Skadarsko jezero', null, 42.2400, 19.1000, 0, null, { d: 'me' }],
+      ['Podgorica', 'Pod Goricom', 42.4304, 19.2594, 1, 'Podgorica. Budućnost i Morača — glavni grad je tvoj.', { d: 'me' }],
+      ['Nikšić', 'Grad pod Trebjesom', 42.7731, 18.9445, 1, 'Nikšić. Sutjeska, pivo i dug put prema sjeveru.', { d: 'me' }],
+      ['Žabljak', 'Pod Durmitorom', 43.1542, 19.1233, 1, 'Žabljak. Najviši grad na ruti — zrak je rjeđi, odgovori također.', { d: 'me' }],
+      ['Pljevlja', 'Sjever sjevera', 43.3567, 19.3584, 1, 'Pljevlja. Dalje od ovoga stižu samo rijetki.', { d: 'me' }],
+      ['Bijelo Polje', 'Dolina Lima', 43.0383, 19.7476, 1, 'Bijelo Polje. Lim teče, a tebi ponestaje karte.', { d: 'me' }],
+      ['Berane', 'Kraj karte', 42.8425, 19.8733, 1, 'Berane. Ovdje karta završava — svaka čast.', { d: 'me' }],
+    ],
+  },
+  {
+    slug: 'ba', name: 'Bosna i Hercegovina', flag: '🇧🇦', total_km: 1000, ext_km: 1250, real_km: 1270, route: 'Bijeljina – Neum',
+    points: [
+      ['Bijeljina', 'Start u Semberiji', 44.7569, 19.2161, 1, 'Bijeljina. Ravna Semberija — odavde je sve uzbrdo.'],
+      ['Brčko', 'Distrikt na Savi', 44.8728, 18.8101, 1, 'Brčko. Sava s desne strane, put pred tobom.'],
+      ['Kalesija', 'Spreča i Memići', 44.4417, 18.8763, 1, 'Kalesija. Spreča teče prema Tuzli, a ti s njom.'],
+      ['Tuzla', 'Grad soli i Kinđeta', 44.5384, 18.6671, 1, 'Tuzla. Grad soli i Mirze Delibašića.'],
+      ['Doboj', 'Rukometno raskrižje', 44.7349, 18.0843, 1, 'Doboj. Grad koji svake godine okupi rukometne prvake.'],
+      ['Banja Luka', 'Prvaci Europe \'76', 44.7722, 17.1910, 1, 'Banja Luka. Borac je ovdje donio rukometni Kup prvaka.'],
+      ['Prijedor', 'Grad na Sani', 44.9799, 16.7140, 1, 'Prijedor. Sana teče, ti voziš dalje.'],
+      ['Bihać', 'Una i krajiški inat', 44.8169, 15.8708, 1, 'Bihać. Una je zelena, a ti si tek zagrijan.'],
+      ['Bosanski Petrovac', null, 44.5547, 16.3697, 0, null],
+      ['Drvar', 'Krajiška šuma', 44.3739, 16.3808, 1, 'Drvar. Šuma, zavoji i nigdje benzinske.'],
+      ['Glamoč', null, 44.0458, 16.8486, 0, null],
+      ['Livno', 'Divlji konji', 43.8269, 17.0075, 1, 'Livno. Divlji konji na Krugu trče brže od tebe.'],
+      ['Tomislavgrad', 'Duvanjsko polje', 43.7183, 17.2256, 1, 'Tomislavgrad. Polje ravno kao teren, vjetar kao bek.'],
+      ['Kupres', null, 43.9953, 17.2789, 0, null],
+      ['Šipovo', 'Izvori Plive', 44.2833, 17.0886, 1, 'Šipovo. Pliva je bistra, a kilometri teku.'],
+      ['Vlasinje', 'Selo pod Jajcem', 44.4419, 17.1970, 1, 'Vlasinje. Malo selo, veliki zavoj — dalje prema Jajcu.'],
+      ['Piljužići', 'Pod Donjim Vakufom', 44.2167, 17.4167, 1, 'Piljužići. Donjovakufska dolina — kilometri se gomilaju.'],
+      ['Bugojno', 'Iskrin grad', 44.0572, 17.4508, 1, 'Bugojno. Iskra je odavde išla u Europu.'],
+      ['Novi Travnik', 'Grad pod Vilenicom', 44.1711, 17.6578, 1, 'Novi Travnik. Mlad grad, stara navika: ovdje se uvijek igra na pobjedu.'],
+      ['Travnik', 'Ćevapi pa dalje', 44.2264, 17.6658, 1, 'Travnik. Stani na ćevape — ili nemoj, sat otkucava.'],
+      ['Vitez', 'Lašvanska dolina', 44.1583, 17.7903, 1, 'Vitez. Ime obvezuje — viteški do kraja partije.'],
+      ['Busovača', 'Pod Busovačkom planinom', 44.0997, 17.8836, 1, 'Busovača. Kratko skretanje, a kilometri se pišu.'],
+      ['Zenica', 'Bilino polje', 44.2017, 17.9040, 1, 'Zenica. Na Bilinom polju gosti rijetko odnose bodove.'],
+      ['Sarajevo', 'Olimpijski grad \'84', 43.8563, 18.4131, 1, 'Sarajevo. Olimpijski grad — Vučko ti maše.'],
+      ['Goražde', 'Grad na Drini', 43.6675, 18.9756, 1, 'Goražde. Drina s lijeve strane, zavoji sa svih.'],
+      ['Foča', 'Rafting na Tari', 43.5064, 18.7781, 1, 'Foča. Tara i Drina — vesla ostavi, ideš cestom.'],
+      ['Gacko', null, 43.1672, 18.5353, 0, null],
+      ['Trebinje', 'Grad sunca', 42.7117, 18.3436, 1, 'Trebinje. Platani, sunce i Leotar.'],
+      ['Stolac', 'Kamen i Bregava', 43.0844, 17.9578, 1, 'Stolac. Hercegovački kamen grije i u studenom.'],
+      ['Mostar', 'Skok sa Starog mosta', 43.3438, 17.8078, 1, 'Mostar. Skakači sa Starog mosta daju ti ocjenu 10.'],
+      ['Široki Brijeg', 'Pecara', 43.3831, 17.5936, 1, 'Široki Brijeg. Na Pecari se gostima rijetko piše dobro.'],
+      ['Ljubuški', 'Kravica i Trebižat', 43.1969, 17.5450, 1, 'Ljubuški. Slap Kravica je blizu, ali more je bliže.'],
+      ['Čapljina', 'Neretva i Počitelj', 43.1211, 17.6844, 1, 'Čapljina. Neretva vodi do mora — još malo.'],
+      ['Neum', 'Cilj: jedino more', 42.9233, 17.6156, 1, 'Neum! More — malo ga je, ali je tvoje. Put ide dalje.', { cilj: true }],
+      ['Zaton Doli', 'Granični prijelaz', 42.8094, 17.6836, 1, 'Granica. Bosna i Hercegovina ostaje iza tebe — dobro došao u Hrvatsku.', { d: 'hr', granica: true }],
+      ['Ston', 'Zidine i sol', 42.8380, 17.6970, 1, 'Ston. Zidine duge kao produžeci.', { d: 'hr' }],
+      ['Dubrovnik', 'Stradun', 42.6507, 18.0944, 1, 'Dubrovnik. Jug i Gruž — vaterpolska prijestolnica.', { d: 'hr' }],
+      ['Mljet', null, 42.7480, 17.5150, 0, null, { d: 'hr' }],
+      ['Korčula', 'Otok vaterpola', 42.9597, 17.1358, 1, 'Korčula. I ovdje se lopta radije baca u more.', { d: 'hr' }],
+      ['Hvar', 'Najsunčaniji otok', 43.1729, 16.4411, 1, 'Hvar. Sunca ima, vremena nema.', { d: 'hr' }],
+      ['Split', 'Najsportskiji grad na svitu', 43.5081, 16.4402, 1, 'Split. Toliko olimpijaca da se ne stignu ni pobrojati.', { d: 'hr' }],
+      ['Šibenik', 'Draženov grad', 43.7350, 15.8952, 1, 'Šibenik. Ovdje je Dražen ostajao na treningu kad su svi otišli.', { d: 'hr' }],
+      ['Zadar', 'Kolijevka košarke', 44.1194, 15.2314, 1, 'Zadar. Kažu da je Bog stvorio čovjeka, a Zadar košarku.', { d: 'hr' }],
+      ['Karlobag', null, 44.5250, 15.0750, 0, null, { d: 'hr' }],
+      ['Senj', 'Kapija bure', 44.9894, 14.9058, 1, 'Senj. Ako bura dopusti, nastavljaš.', { d: 'hr' }],
+      ['Rijeka', 'Kantrida pod stijenom', 45.3271, 14.4422, 1, 'Rijeka. Kantrida je stisnuta između stijene i mora.', { d: 'hr' }],
+      ['Pazin', null, 45.2400, 13.9360, 0, null, { d: 'hr' }],
+      ['Pula', 'Kraj karte', 44.8666, 13.8496, 1, 'Pula. Ovdje karta završava — svaka čast.', { d: 'hr' }],
+    ],
+  },
+];
+
+// Referentne udaljenosti: 12, 30, 54, 84, 120, 150, 220 km. Pragovi rijetkosti: 0–100.
+const KM = [12, 30, 54, 84, 120, 150, 220];
+const PRAG = [0, 30, 48, 63, 76, 87, 95];
+const set = (name, description, active, rows) => ({ name, description, active, modes: rows.map(([emoji, n, d], i) => ({ level: i + 1, emoji, name: n, description: d, km: KM[i], min_rarity: PRAG[i] })) });
+
+export const PRIJEVOZ = [
+  set('Sportski tempo', 'Od sudačkog trka do bolida na magistrali.', 1, [
+    ['🚩', 'Sudački trk', 'Uz aut-liniju, oko na ofsajdu.'],
+    ['⚡', 'Bolt na 100 m', '9,58 sekundi. Munja na stazi.'],
+    ['🏇', 'Konj na Sinjskoj alci', 'U sridu, pa u galop.'],
+    ['🚍', 'Klupski autobus s rotirkom', 'Policijska pratnja, zelena svjetla.'],
+    ['🏍️', 'MotoGP rekord', 'Preko 350 na sat na ravnini, koljeno po asfaltu.'],
+    ['🎾', 'Goranov as', 'Preko 200 na sat. Taj se ne vraća.'],
+    ['🏎️', 'Bolid na magistrali', 'DRS otvoren, cijela ravnina je njegova.'],
+  ]),
+  set('Balkanski luksuz', 'Od šlapa do šeikovog aviona.', 0, [
+    ['🩴', 'Šlape i čarape', 'Udobno, ali ne daleko.'],
+    ['🚜', 'Traktor s prikolicom', 'Cijelo selo stane otraga.'],
+    ['🚙', 'Golf dvojka dizel', 'Prešao je više nego ti.'],
+    ['🚐', 'Kombi s roštiljem', 'Miriše do sljedećeg grada.'],
+    ['🚘', 'Menadžerov Mercedes', 'Zatamnjena stakla, provizija 10 %.'],
+    ['🛥️', 'Jahta iz Monte Carla', 'Sidro tek u sljedećoj luci.'],
+    ['🛩️', 'Šeikov privatni avion', 'Prijelazni rok je uvijek otvoren.'],
+  ]),
+  set('Sportska oprema', 'Sve što ima kotače, jedra ili skije.', 0, [
+    ['🛼', 'Koturaljke s Rive', 'Lagano, uz more.'],
+    ['🛹', 'Skejt', 'Nizbrdo ide samo.'],
+    ['🚴', 'Trkaći bicikl', 'U zavjetrini glavne grupe.'],
+    ['🏇', 'Alkarski konj', 'U sridu!'],
+    ['⛵', 'Jedrilica s regate', 'Bura puše u krmu.'],
+    ['🏍️', 'Trkaći motor', 'Koljeno do asfalta.'],
+    ['⛷️', 'Spust bez kočenja', 'Niz Sljeme, bez ijednog zavoja.'],
+  ]),
+];
+
+export const POSTAVKE = {
+  game_name: 'ONTALE',
+  logo_text: 'Ontale',
+  tagline: '10 sportskih pitanja dnevno.',
+  colors: { sign: '#0c7a55', route: '#ffc928', ink: '#12181b', alert: '#e5553a' },
+  messages: {
+    wrong: 'Tog odgovora nema u bazi. Ostaješ gdje jesi.',
+    retry: 'To nije taj odgovor. Pokušaj ponovno!',
+    timeout: 'Vrijeme je isteklo. Radovi na cesti — 0 km.',
+    beyond: 'Prošao si cilj i nastavljaš dalje!',
+    goal: 'Stigao si do cilja!',
+    short: 'Danas nisi stigao do cilja. Sutra je nova ruta.',
+    share: 'Dokle ćeš ti stići?',
+  },
+  timezone: 'Europe/Zagreb',
+  reset_time: '00:00',
+  // Rijetkost: K = težina početne procjene ("virtualni igrači"), udjeli percentila i širine baze, najviše glasova po IP adresi.
+  rarity: { prior_strength: 200, w_percentile: 0.7, w_breadth: 0.3, ip_cap: 3 },
+  // Procjene: postotna pogreška → razina prijevoza (unutar tolerancije pitanja uvijek najviša razina).
+  numeric_thresholds: [
+    { max_pct: 2.5, level: 6 }, { max_pct: 6, level: 5 }, { max_pct: 12, level: 4 },
+    { max_pct: 22, level: 3 }, { max_pct: 40, level: 2 }, { max_pct: 70, level: 1 },
+  ],
+  guests_on_leaderboard: false,
+  reactions: ['👏', '🔥', '😂', '😱', '🐐', '🧱'],
+  // Tijek igre: broj pitanja u danu, priprema i vrijeme za odgovor (sekunde), ponovni pokušaji, ponašanje pri isteku.
+  game: { questions_per_day: 10, prep_seconds: 5, answer_seconds: 30, retries: true, max_attempts: 15, grace_ms: 1500, numeric_timeout: 'spremljena' },
+  countries: DRZAVE,
+  // 'tamna' = tamna vektorska karta (OpenFreeMap); 'osm' = OpenStreetMap rasterske pločice; ili URL bilo kojeg MapLibre stila
+  map_style: 'tamna',
+  contact_email: 'kontakt@ontale.eu',
+};

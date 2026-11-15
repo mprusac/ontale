@@ -1,0 +1,2 @@
+# /etc/cron.d/ontale-backup — dnevna sigurnosna kopija u 04:15
+15 4 * * * ontale cd /opt/ontale && /usr/bin/node --disable-warning=ExperimentalWarning scripts/backup.js >> /var/log/ontale-backup.log 2>&1

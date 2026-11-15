@@ -1,0 +1,22 @@
+{
+  "name": "ontale",
+  "version": "2.3.0",
+  "description": "ONTALE.eu — dnevna sportska igra: osam pitanja, rijetkost odgovora i putovanje po karti",
+  "type": "module",
+  "private": true,
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --disable-warning=ExperimentalWarning --watch server.js",
+    "seed": "node --disable-warning=ExperimentalWarning seed/seed.js",
+    "admin": "node --disable-warning=ExperimentalWarning scripts/admin.js",
+    "backup": "node --disable-warning=ExperimentalWarning scripts/backup.js",
+    "reset": "node --disable-warning=ExperimentalWarning scripts/reset-partije.js",
+    "test": "node --disable-warning=ExperimentalWarning --test test/unit.test.js test/integration.test.js test/tajmeri.test.js test/nadogradnja.test.js test/liga.test.js test/sadrzaj.test.js test/drustvo.test.js",
+    "test:e2e": "node --disable-warning=ExperimentalWarning test/e2e.mjs",
+    "test:e2e:v23": "node --disable-warning=ExperimentalWarning test/e2e-v23.mjs",
+    "jobs": "node --disable-warning=ExperimentalWarning scripts/poslovi.js",
+    "sounds": "python3 scripts/zvukovi.py",
+    "borders": "node scripts/granice.js"
+  }
+}

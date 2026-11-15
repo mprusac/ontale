@@ -1,0 +1,8 @@
+# Caddy automatski pribavlja i obnavlja TLS certifikat (Let's Encrypt) za obje domene.
+ontale.eu {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:3000
+}
+www.ontale.eu {
+	redir https://ontale.eu{uri} permanent
+}

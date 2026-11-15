@@ -1,0 +1,16 @@
+# docker compose -f deploy/docker-compose.yml up -d --build
+# Prvo pokretanje:  docker compose -f deploy/docker-compose.yml run --rm ontale node --disable-warning=ExperimentalWarning seed/seed.js
+services:
+  ontale:
+    build: ..
+    restart: unless-stopped
+    env_file: ../.env
+    environment:
+      HOST: 0.0.0.0
+      DATA_DIR: /data
+    volumes:
+      - ontale-data:/data
+    ports:
+      - "127.0.0.1:3000:3000"
+volumes:
+  ontale-data:

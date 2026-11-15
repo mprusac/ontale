@@ -1,0 +1,3 @@
+# /etc/cron.d/ontale-jobs — NEOBAVEZNO. Koristi samo ako je u .env postavljeno JOBS=off
+# (inače poslužitelj sam pokreće iste poslove svakih 5 minuta). Poslovi su idempotentni: dvostruko pokretanje ništa ne šalje dvaput.
+*/10 * * * * ontale cd /opt/ontale && /usr/bin/node --disable-warning=ExperimentalWarning scripts/poslovi.js >> /var/log/ontale-jobs.log 2>&1

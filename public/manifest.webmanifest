@@ -1,0 +1,1 @@
+{ "name": "ONTALE", "short_name": "ONTALE", "description": "Dnevna sportska igra: osam pitanja, rijetkost odgovora i putovanje po karti.", "lang": "hr", "start_url": "/", "display": "standalone", "background_color": "#eceee9", "theme_color": "#0b6b4f", "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }] }
